@@ -46,6 +46,28 @@
     ```
 
 ## Run Pi Racer
+- Calibrate Pi-Racer
+  - to see which path Pi-Racer library's from
+  ```
+  which python3
+  ```
+  - set path Pi-Racer library
+  ```
+  source venv/bin/activate
+  ```
+  - set path Pi-Racer library
+  ```
+  deactivate venv/bin/activate
+  source env/bin/activate
+  ```
+  - calibrate (/home/team7/env/lib/python3.9/site-packages/piracer/vehicle.py)
+  ```
+  class PiRacerBase:
+    ...
+    def _get_50hz_duty_cycle_from_percent(cls, value: float) -> float:
+      return 0.0015 + (value * 0.0005) #ex) 0.0016
+  ```
+  
 - Install Pi-Racer package
   ```
   cd ~
