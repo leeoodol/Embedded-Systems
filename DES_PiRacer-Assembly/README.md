@@ -46,6 +46,7 @@
     ```
 
 ## Run Pi Racer
+![poster](./image/piracer_overview.drawio.svg)
 - Calibrate Pi-Racer
   - to see which path Pi-Racer library's from
   ```
