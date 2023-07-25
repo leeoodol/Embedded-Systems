@@ -48,7 +48,12 @@ This documentation explains how to establish CAN bus communication between two A
 - Arduino Nano (Transmitter) x 1
 - MCP2515 CAN Bus Controller Module x 2
 ![poster](./image/MCP2515-Parts.jpg)
+  - [download library here](https://github.com/autowp/arduino-mcp2515/)
+
+
 - Ultrasonic Sensor x 1
+- LCD1602 I2C Module x 1
+  - only include library arduino [download library here](https://www.waveshare.com/wiki/File:LCD1602-RGB-Module-demo.zip#file)
 
 ## Wiring
 
