@@ -1,9 +1,6 @@
 #include <SPI.h>          //Library for using SPI Communication 
 #include <mcp2515.h>      //Library for using CAN Communication (https://github.com/autowp/arduino-mcp2515/)
  
-#define DHTPIN 8
-#define DHTTYPE DHT11
- 
 struct can_frame canMsg; //canMsg struct data type for storing CAN message format.
  
 MCP2515 mcp2515(10); //set the pin number where SPI CS is connected.
@@ -31,8 +28,8 @@ void setup()
 {
   canMsg.can_id  = 0x036;           //CAN id as 0x036
   canMsg.can_dlc = 8;               //CAN data length as 8
-  canMsg.data[0] = 0x00;               //Update humidity value in [0]
-  canMsg.data[1] = 0x00;               //Update temperature value in [1]
+  canMsg.data[0] = 0x00;               
+  canMsg.data[1] = 0x00;            
   canMsg.data[2] = 0x00;            //Rest all with 0
   canMsg.data[3] = 0x00;
   canMsg.data[4] = 0x00;
@@ -49,7 +46,7 @@ void setup()
   SPI.begin();               //Begins SPI communication
  
   mcp2515.reset();
-  mcp2515.setBitrate(CAN_125KBPS); //Sets CAN at speed 500KBPS and Clock 8MHz
+  mcp2515.setBitrate(CAN_125KBPS); //Sets CAN at speed 125KBPS
   mcp2515.setNormalMode();
 
   Serial.println("Example: Write to CAN");
