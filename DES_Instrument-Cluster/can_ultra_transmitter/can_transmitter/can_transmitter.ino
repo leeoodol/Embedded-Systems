@@ -46,7 +46,7 @@ void setup()
   SPI.begin();               //Begins SPI communication
  
   mcp2515.reset();
-  mcp2515.setBitrate(CAN_125KBPS); //Sets CAN at speed 125KBPS
+  mcp2515.setBitrate(CAN_125KBPS, MCP_8MHZ); //Sets CAN at speed 125KBPS
   mcp2515.setNormalMode();
 
   Serial.println("Example: Write to CAN");
