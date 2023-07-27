@@ -18,6 +18,10 @@
   - id : team07
   - pwd : 1234
   - connect with ssh : ssh -Y team07@192.168.86.31
+    ```
+    nslookup raspberrypi
+    ```
+     to see raspi ip
 
 - raspi config
   - enable Interfacing Options - I2C
