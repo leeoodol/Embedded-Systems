@@ -117,3 +117,88 @@ This documentation explains how to establish CAN bus communication between two A
 5. **Loop Function:**
    - The `mcp2515.readMessage(&canMsg)` function is called to check if a CAN message has been received.
    - If a message with the specified `slaveID` is received, the distance data is extracted from the received CAN message and displayed on the LCD.
+
+# CAN Bus Communication with Raspberry Pi and Arduino
+-----------------------------------------------------------
+This documentation explains how to establish CAN (Controller Area Network) communication between a Raspberry Pi and an Arduino using the 2-CH CAN FD HAT. The Raspberry Pi will act as the receiver, and the Arduino equipped with an ultrasonic module will serve as the transmitter.
+
+## Equipment Used
+1. Raspberry Pi (receiver)
+2. 2-CH CAN FD HAT
+3. Arduino with Ultrasonic Module (transmitter)
+
+## Reference Website
+- [WaveShare Wiki - 2-CH CAN FD HAT](https://www.waveshare.com/wiki/2-CH_CAN_FD_HAT)
+
+## Raspberry Pi Configuration
+
+### Step 1: Install `bcm2835` Library
+```bash
+wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.60.tar.gz
+tar zxvf bcm2835-1.60.tar.gz
+cd bcm2835-1.60/
+sudo ./configure
+sudo make
+sudo make check
+sudo make install
+```
+
+### Step 2: Install `wiringpi` Library
+```bash
+sudo -s
+apt --fix-broken install
+sudo apt-get install wiringpi
+wget https://project-downloads.drogon.net/wiringpi-latest.deb
+sudo dpkg -i wiringpi-latest.deb
+```
+
+### Step 3: Check `gpio` Version
+```bash
+gpio -v
+```
+
+### Step 4: Install Required Python Packages
+```bash
+sudo apt-get update
+sudo apt-get install python3-pip
+sudo apt-get install python3-pil
+sudo apt-get install python3-numpy
+sudo pip3 install RPi.GPIO
+sudo pip3 install spidev
+sudo pip3 install python-can
+```
+
+### Step 5: Set Up CAN Interfaces
+```bash
+sudo ip link set can0 up type can bitrate 125000 dbitrate 8000000 restart-ms 1000 berr-reporting on fd on  # Set your own bitrate
+sudo ip link set can1 up type can bitrate 125000 dbitrate 8000000 restart-ms 1000 berr-reporting on fd on  # Set your own bitrate
+sudo ip link set can0 down  # To reset the bitrate and dbitrate of can0 if they are busy to change rate. Use this if you want to change the rate of the CAN protocol.
+sudo ifconfig can0 txqueuelen 65536
+sudo ifconfig can1 txqueuelen 65536
+```
+
+### Step 6: Verify Network Interfaces
+```bash
+ifconfig
+```
+![poster](./image/screenshot1.png)
+
+### Step 7: Install `can-utils` (Optional)
+```bash
+sudo apt-get install can-utils
+```
+
+### Step 8: Test CAN Communication
+To accept all data from `can0`, use the following command:
+```bash
+candump can0
+```
+
+To send data from `can1`, use the following command:
+```bash
+cansend can1 000#11.22.33.44
+```
+![poster](./image/screenshot2.png)
+
+### Note:
+For the 2-CH CAN FD HAT, the interface names `can0` and `can1` might be reversed. If you cannot get data from `can0`, try changing to `can1`.
