@@ -22,7 +22,7 @@ void setup()
   delay(3000);
   lcd.clear();
   mcp2515.reset();
-  mcp2515.setBitrate(CAN_125KBPS, MCP_8MHZ); //Sets CAN at speed 500KBPS Clock
+  mcp2515.setBitrate(CAN_125KBPS, MCP_8MHZ); //Sets CAN at speed 125KBPS Clock
   mcp2515.setNormalMode();                  //Sets CAN at normal mode
 }
 void loop()

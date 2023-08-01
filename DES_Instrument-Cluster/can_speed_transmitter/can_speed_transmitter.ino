@@ -5,7 +5,7 @@ struct can_frame canMsg; //canMsg struct data type for storing CAN message forma
  
 MCP2515 mcp2515(10); //set the pin number where SPI CS is connected.
 
-const byte PulsesPerRevolution = 2;
+const byte PulsesPerRevolution = 20;
 const unsigned long ZeroTimeout = 100000;
 const byte numReadings = 2;
 
