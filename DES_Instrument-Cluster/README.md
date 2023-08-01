@@ -202,3 +202,109 @@ cansend can1 000#11.22.33.44
 
 ### Note:
 For the 2-CH CAN FD HAT, the interface names `can0` and `can1` might be reversed. If you cannot get data from `can0`, try changing to `can1`.
+
+# Cross Compile Guide for Qt on Raspberry Pi
+-----------------------------------------------------------
+step-by-step guide on how to cross compile Qt for Raspberry Pi on an Ubuntu machine.
+
+host : Ubuntu 20.04.6 LTS
+
+target : Rasbian bulleye 64bit desktop
+
+## Update System(Host)
+
+```bash
+sudo apt update
+sudo apt upgrade
+```
+
+## Install Cross Compiler(Host)
+
+```bash
+sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+```
+
+## Directory Setup(Host)
+
+Create the required directory structure under `~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4`:
+
+```bash
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/build
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/tools
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/sysroot
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/sysroot/usr
+sudo mkdir ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/sysroot/opt
+sudo chown -R 1000:1000 ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+cd ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+```
+
+## Download Qt Resources(Host)
+
+Download the Qt resources and unpack them in the `raspberrypi4` directory:
+
+```bash
+sudo wget http://download.qt.io/archive/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.tar.xz
+sudo tar xfv qt-everywhere-src-5.15.2.tar.xz
+```
+
+## Modify mkspec file(Host)
+
+To use the compiler, modify the mkspec file:
+
+```bash
+cp -R qt-everywhere-src-5.15.2/qtbase/mkspecs/linux-arm-gnueabi-g++ qt-everywhere-src-5.15.2/qtbase/mkspecs/linux-arm-gnueabihf-g++
+sed -i -e 's/arm-linux-gnueabi-/arm-linux-gnueabihf-/g' qt-everywhere-src-5.15.2/qtbase/mkspecs/linux-arm-gnueabihf-g++/qmake.conf
+```
+
+## Rsync Raspberry Libraries(Host)
+
+Copy the original Raspberry Pi libraries into the Ubuntu directories using rsync:
+
+```bash
+cd /Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/lib/ sysroot/lib
+rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/usr/include/ sysroot/usr/include
+rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/usr/lib/ sysroot/usr/lib
+rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/opt/vc/ sysroot/opt/vc
+```
+
+## Clean up symbolic links(Host)
+
+Clean up the symbolic links so that they point to the correct original files:
+
+```bash
+sudo apt install symlinks
+cd ~
+symlinks -rc rpi-sysroot
+```
+
+## Compile Qt(Host)
+
+Configure and compile Qt for Raspberry Pi:
+
+```bash
+cd build
+../qt-everywhere-src-5.15.2/configure -release -opengl es2 -eglfs -device linux-rasp-pi4-aarch64 -device-option CROSS_COMPILE=aarch64-linux-gnu- -sysroot ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/sysroot -prefix /usr/local/qt5.15 -extprefix ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/qt5.15 -opensource -confirm-license -skip qtscript -skip qtwayland -skip qtwebengine -nomake tests -make libs -pkg-config -no-use-gold-linker -v -recheck
+make -j16
+make install
+```
+
+## Send compiled files on the Raspberry Pi(Host)
+
+
+If the compilation is successful, copy the compiled files to the Raspberry Pi using rsync:
+
+```bash
+cd build-cc_ex-team07-Debug/
+rsync -avz --rsync-path="rsync"  team07@192.168.86.51:/home/team07
+```
+
+## Execute on the Raspberry Pi(RPi)
+
+```bash
+cd /home/team07
+./cc_ex
+```
+
+
