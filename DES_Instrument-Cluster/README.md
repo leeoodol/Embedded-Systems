@@ -211,20 +211,20 @@ host : Ubuntu 20.04.6 LTS
 
 target : Rasbian bulleye 64bit desktop
 
-## Update System
+## Update System(Host)
 
 ```bash
 sudo apt update
 sudo apt upgrade
 ```
 
-## Install Cross Compiler
+## Install Cross Compiler(Host)
 
 ```bash
 sudo apt install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 ```
 
-## Directory Setup
+## Directory Setup(Host)
 
 Create the required directory structure under `~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4`:
 
@@ -239,7 +239,7 @@ sudo chown -R 1000:1000 ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
 cd ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
 ```
 
-## Download Qt Resources
+## Download Qt Resources(Host)
 
 Download the Qt resources and unpack them in the `raspberrypi4` directory:
 
@@ -248,7 +248,7 @@ sudo wget http://download.qt.io/archive/qt/5.15/5.15.2/single/qt-everywhere-src-
 sudo tar xfv qt-everywhere-src-5.15.2.tar.xz
 ```
 
-## Modify mkspec file
+## Modify mkspec file(Host)
 
 To use the compiler, modify the mkspec file:
 
@@ -257,7 +257,7 @@ cp -R qt-everywhere-src-5.15.2/qtbase/mkspecs/linux-arm-gnueabi-g++ qt-everywher
 sed -i -e 's/arm-linux-gnueabi-/arm-linux-gnueabihf-/g' qt-everywhere-src-5.15.2/qtbase/mkspecs/linux-arm-gnueabihf-g++/qmake.conf
 ```
 
-## Rsync Raspberry Libraries
+## Rsync Raspberry Libraries(Host)
 
 Copy the original Raspberry Pi libraries into the Ubuntu directories using rsync:
 
@@ -269,7 +269,7 @@ rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/usr/lib/ sysroot
 rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/opt/vc/ sysroot/opt/vc
 ```
 
-## Clean up symbolic links
+## Clean up symbolic links(Host)
 
 Clean up the symbolic links so that they point to the correct original files:
 
@@ -279,7 +279,7 @@ cd ~
 symlinks -rc rpi-sysroot
 ```
 
-## Compile Qt
+## Compile Qt(Host)
 
 Configure and compile Qt for Raspberry Pi:
 
@@ -290,10 +290,21 @@ make -j16
 make install
 ```
 
-## Install compiled files on the Raspberry Pi
+## Send compiled files on the Raspberry Pi(Host)
+
 
 If the compilation is successful, copy the compiled files to the Raspberry Pi using rsync:
 
 ```bash
-rsync -avz --rsync-path="rsync" untitled8 team07@192.168.86.51:/home/team07
+cd build-cc_ex-team07-Debug/
+rsync -avz --rsync-path="rsync"  team07@192.168.86.51:/home/team07
 ```
+
+## Execute on the Raspberry Pi(RPi)
+
+```bash
+cd /home/team07
+./cc_ex
+```
+
+
