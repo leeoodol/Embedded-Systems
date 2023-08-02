@@ -262,7 +262,7 @@ sed -i -e 's/arm-linux-gnueabi-/arm-linux-gnueabihf-/g' qt-everywhere-src-5.15.2
 Copy the original Raspberry Pi libraries into the Ubuntu directories using rsync:
 
 ```bash
-cd /Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+cd Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
 rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/lib/ sysroot/lib
 rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/usr/include/ sysroot/usr/include
 rsync -avzS --rsync-path="rsync" --delete team07@192.168.86.51:/usr/lib/ sysroot/usr/lib
@@ -275,13 +275,21 @@ Clean up the symbolic links so that they point to the correct original files:
 
 ```bash
 sudo apt install symlinks
-cd ~
-symlinks -rc rpi-sysroot
+cd Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
+symlinks -rc sysroot
 ```
 
 ## Compile Qt(Host)
 
 Configure and compile Qt for Raspberry Pi:
+
+[copy linux-rasp-pi4-aarch64 to your devices folder](https://code.qt.io/cgit/qt/qtbase.git/tree/mkspecs/devices)
+
+```bash
+cd Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/qt5.15/mkspecs/devices
+vim qmake.conf 
+vim qplatformdefs.h
+```
 
 ```bash
 cd build
