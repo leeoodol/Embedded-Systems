@@ -96,7 +96,7 @@ Window {
 //                on: valueSource.turnSignal == Qt.LeftArrow
 //            }
 
-            Item { //연료 및 온도 게이지
+            Item { //fuel gauge
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
                 anchors.verticalCenter: parent.verticalCenter
@@ -127,15 +127,9 @@ Window {
 
             CircularGauge { //속도계
                 id: speedometer
-                value: valueSource.kph
+                value: valueSource.kph // Sets the current value of the gauge to the value of "kph" from valueSource.
                 anchors.verticalCenter: parent.verticalCenter
                 maximumValue: 280
-                // We set the width to the height, because the height will always be
-                // the more limited factor. Also, all circular controls letterbox
-                // their contents to ensure that they remain circular. However, we
-                // don't want to extra space on the left and right of our gauges,
-                // because they're laid out horizontally, and that would create
-                // large horizontal gaps between gauges on wide screens.
                 width: height
                 height: container.height * 0.5
 
@@ -144,6 +138,7 @@ Window {
 
             CircularGauge { //RPM
                 id: tachometer
+                value: valueSource.gear // Sets the current value of the gauge to the value of "gear" from valueSource.
                 width: height
                 height: container.height * 0.5
                 maximumValue: 8

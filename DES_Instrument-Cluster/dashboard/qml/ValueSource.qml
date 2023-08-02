@@ -55,10 +55,10 @@ Item {
     property real kph: 0
     property real rpm: 1
     property real fuel: 0.85
-    property string gear: {
+    property real gear: {
         var g;
         if (kph == 0) {
-            return "P";
+            return "0";
         }
         if (kph < 30) {
             return "1";
