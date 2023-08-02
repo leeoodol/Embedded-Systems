@@ -276,7 +276,7 @@ Clean up the symbolic links so that they point to the correct original files:
 ```bash
 sudo apt install symlinks
 cd Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4
-symlinks -rc rpi-sysroot
+symlinks -rc sysroot
 ```
 
 ## Compile Qt(Host)
