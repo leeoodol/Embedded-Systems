@@ -283,6 +283,14 @@ symlinks -rc sysroot
 
 Configure and compile Qt for Raspberry Pi:
 
+[copy linux-rasp-pi4-aarch64 to your devices folder](https://code.qt.io/cgit/qt/qtbase.git/tree/mkspecs/devices)
+
+```bash
+cd Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/qt5.15/mkspecs/devices
+vim qmake.conf 
+vim qplatformdefs.h
+```
+
 ```bash
 cd build
 ../qt-everywhere-src-5.15.2/configure -release -opengl es2 -eglfs -device linux-rasp-pi4-aarch64 -device-option CROSS_COMPILE=aarch64-linux-gnu- -sysroot ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/sysroot -prefix /usr/local/qt5.15 -extprefix ~/Documents/Qt-CrossCompile-RaspberryPi/raspberrypi4/qt5.15 -opensource -confirm-license -skip qtscript -skip qtwayland -skip qtwebengine -nomake tests -make libs -pkg-config -no-use-gold-linker -v -recheck
