@@ -28,14 +28,14 @@ class MyDBUSService(object):
         msg = self.can.recv()
         if msg is None:
             print('Timeout occurred, no message.')
-        rpm = msg.data[0]
+        rpm = str(msg.data[0])
         return rpm
     
     def get_distance(self):
         msg = self.can.recv()
         if msg is None:
             print('Timeout occurred, no message.')
-        distance = msg.data[1]
+        distance = str(msg.data[1])
         return distance
 
     def Quit(self):
