@@ -1,5 +1,7 @@
 import os
 import can
+import time
+from piracer.vehicles import PiRacerStandard
 from pydbus import SessionBus
 from gi.repository import GLib
 
@@ -15,6 +17,9 @@ class MyDBUSService(object):
 				<method name='get_distance'>
 					<arg type='s' name='distance' direction='out'/>
 				</method>
+                <method name='energy_report'>
+					<arg type='s' name='battery' direction='out'/>
+				</method>
 			</interface>
 		</node>
 	"""
@@ -28,18 +33,27 @@ class MyDBUSService(object):
         msg = self.can.recv()
         if msg is None:
             print('Timeout occurred, no message.')
-        rpm = str(msg.data[0])
+        rpm = msg.data[0]
         return rpm
     
     def get_distance(self):
         msg = self.can.recv()
         if msg is None:
             print('Timeout occurred, no message.')
-        distance = str(msg.data[1])
+        distance = msg.data[1]
         return distance
+
+    def energy_report():
+        battery_voltage = piracer.get_battery_voltage()
+        battery_current = piracer.get_battery_current()
+        #power_consumption = piracer.get_power_consumption()
+        battery_level = str((battery_voltage - 6) / 2.4 * 100)
+        return battery_level
 
     def Quit(self):
         loop.quit()
+
+piracer = PiRacerStandard()
 
 loop = GLib.MainLoop()
 bus = SessionBus()
@@ -48,3 +62,4 @@ try:
     loop.run()
 except KeyboardInterrupt:
     os.system(f'sudo ifconfig {CAN_ID} down')    
+
