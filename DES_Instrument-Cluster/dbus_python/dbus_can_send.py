@@ -18,8 +18,8 @@ class MyDBUSService(object):
 					<arg type='s' name='distance' direction='out'/>
 				</method>
                 <method name='energy_report'>
-					<arg type='s' name='battery' direction='out'/>
-				</method>
+                    <arg type='s' name='battery' direction='out'/>
+                </method>
 			</interface>
 		</node>
 	"""
@@ -28,32 +28,34 @@ class MyDBUSService(object):
         os.system(f'sudo ifconfig {CAN_ID} down')
         os.system(f'sudo ip link set {CAN_ID} up type can bitrate 125000 dbitrate 8000000 restart-ms 1000 berr-reporting on fd on')
         self.can = can.interface.Bus(channel = CAN_ID, bustype = 'socketcan')
+        self.piracer = PiRacerStandard()
 
     def get_rpm(self):
         msg = self.can.recv()
         if msg is None:
-            print('Timeout occurred, no message.')
-        rpm = msg.data[0]
+            print('rpm no message.')
+        rpm = str(msg.data[0])
+        print(rpm)
         return rpm
     
     def get_distance(self):
         msg = self.can.recv()
         if msg is None:
-            print('Timeout occurred, no message.')
-        distance = msg.data[1]
+            print('distance no message.')
+        distance = str(msg.data[1])
+        print(distance)
         return distance
 
     def energy_report():
-        battery_voltage = piracer.get_battery_voltage()
-        battery_current = piracer.get_battery_current()
-        #power_consumption = piracer.get_power_consumption()
-        battery_level = str((battery_voltage - 6) / 2.4 * 100)
-        return battery_level
+        battery_voltage = self.piracer.get_battery_voltage()
+        #battery_current = self.piracer.get_battery_current()
+        #power_consumption = self.piracer.get_power_consumption()
+        battery = str((battery_voltage - 6) / 2.4 * 100)
+        print(battery)
+        return battery
 
     def Quit(self):
         loop.quit()
-
-piracer = PiRacerStandard()
 
 loop = GLib.MainLoop()
 bus = SessionBus()

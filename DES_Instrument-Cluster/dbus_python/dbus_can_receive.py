@@ -14,6 +14,7 @@ try:
         
         reply_battery = the_object.energy_report()
         print("Battery:", reply_battery)
+        
         # Delay for a short period before the next iteration
         time.sleep(1)  # Adjust the delay as needed
 except KeyboardInterrupt:
