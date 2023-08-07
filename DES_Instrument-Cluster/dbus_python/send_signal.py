@@ -15,7 +15,7 @@ loop = GLib.MainLoop()
 class MyDBUSService(object):
 	"""
 		<node>
-			<interface name='net.lew21.pydbus.ClientServerExample'>
+			<interface name='net.team07.pydbus.ClientServerExample'>
 				<method name='Hello'>
 					<arg type='s' name='response' direction='out'/>
 				</method>
@@ -40,5 +40,5 @@ class MyDBUSService(object):
 		loop.quit()
 
 bus = SessionBus()
-bus.publish("net.lew21.pydbus.ClientServerExample", MyDBUSService())
+bus.publish("net.team07.pydbus.ClientServerExample", MyDBUSService())
 loop.run()
