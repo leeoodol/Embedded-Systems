@@ -1,34 +1,22 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-import pydbus 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
-from gi.repository import GLib
+# Based on http://stackoverflow.com/questions/22390064/use-dbus-to-just-send-a-message-in-python
 
-class ExampleSignalReceiver(dbus.service.Object):
-    def __init__(self):
-        bus_name = dbus.service.BusName('com.example.DBusExample', bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, '/com/example/DBusExample')
+# Python script to call the methods of the DBUS Test Server
 
-    @dbus.service.signal('com.example.DBusExample')
-    def ExampleSignal(self, message):
-        print('Signal received:', message)
+from pydbus import SessionBus
 
-    @dbus.service.method('com.example.DBusExample')
-    def ExampleMethod(self):
-        print('Method called')
-        return 'Example response'
-    
-DBusGMainLoop(set_as_default=True)
-ExampleSignalReceiver()
 
-bus = dbus.SessionBus()
-bus.add_signal_receiver(
-    ExampleSignalReceiver.ExampleSignal,
-    dbus_interface='com.example.DBusExample',
-    signal_name='ExampleSignal'
-)
+#get the session bus
+bus = SessionBus()
+#get the object
+the_object = bus.get("net.lew21.pydbus.ClientServerExample")
 
-loop = GLib.MainLoop()
-loop.run()
+#call the methods and print the results
+reply = the_object.Hello()
+print(reply)
+
+reply = the_object.EchoString("test 123")
+print(reply)
+
+#the_object.Quit()
