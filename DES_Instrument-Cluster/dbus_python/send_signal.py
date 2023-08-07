@@ -1,23 +1,44 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-import dbus
-import dbus.service
-from dbus.mainloop.glib import DBusGMainLoop
+# Based on http://stackoverflow.com/questions/22390064/use-dbus-to-just-send-a-message-in-python
 
-class ExampleDBusService(dbus.service.Object):
-    def __init__(self):
-        bus_name = dbus.service.BusName('com.example.DBusExample', bus=dbus.SessionBus())
-        dbus.service.Object.__init__(self, bus_name, '/com/example/DBusExample')
+# Python DBUS Test Server
+# runs until the Quit() method is called via DBUS
 
-    @dbus.service.signal('com.example.DBusExample')
-    def ExampleSignal(self, message):
-        print('Signal sent:', message)
-        
-DBusGMainLoop(set_as_default=True)
-ExampleDBusService()
 
-bus = dbus.SessionBus()
-dbus_service = bus.get_object('com.example.DBusExample', '/com/example/DBusExample')
+from gi.repository import GLib
+from pydbus import SessionBus
 
-dbus_iface = dbus.Interface(dbus_service, 'com.example.DBusExample')
-dbus_iface.ExampleSignal('hello world')
+
+loop = GLib.MainLoop()
+
+class MyDBUSService(object):
+	"""
+		<node>
+			<interface name='net.lew21.pydbus.ClientServerExample'>
+				<method name='Hello'>
+					<arg type='s' name='response' direction='out'/>
+				</method>
+				<method name='EchoString'>
+					<arg type='s' name='a' direction='in'/>
+					<arg type='s' name='response' direction='out'/>
+				</method>
+			</interface>
+		</node>
+	"""
+
+	def Hello(self):
+		"""returns the string 'Hello, World!'"""
+		return "Hello, World!"
+
+	def EchoString(self, s):
+		"""returns whatever is passed to it"""
+		return s
+
+	def Quit(self):
+		"""removes this object from the DBUS connection and exits"""
+		loop.quit()
+
+bus = SessionBus()
+bus.publish("net.lew21.pydbus.ClientServerExample", MyDBUSService())
+loop.run()
