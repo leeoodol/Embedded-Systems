@@ -311,6 +311,7 @@ rsync -avz --rsync-path="rsync" filename team07@192.168.86.51:/home/team07
 ## Execute on the Raspberry Pi(RPi)
 
 ```bash
+ssh -X team07@192.168.86.51
 cd /home/team07
 ./cc_ex
 ```
