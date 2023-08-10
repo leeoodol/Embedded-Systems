@@ -46,7 +46,7 @@ class MyDBUSService(object):
         print(distance)
         return distance
 
-    def energy_report():
+    def energy_report(self):
         battery_voltage = self.piracer.get_battery_voltage()
         #battery_current = self.piracer.get_battery_current()
         #power_consumption = self.piracer.get_power_consumption()

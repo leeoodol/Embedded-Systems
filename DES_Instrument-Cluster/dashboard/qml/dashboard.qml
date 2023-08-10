@@ -48,7 +48,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.2
+import QtQuick 2.15
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
@@ -65,6 +65,8 @@ Window {
 
     ValueSource { //애니메이션을 위해 시간에 따라 변하는 값 used to get dynamic data for the UI.
         id: valueSource
+        visible: true
+        clip: false
     }
 
     // Dashboards are typically in a landscape orientation, so we need to ensure
@@ -73,6 +75,8 @@ Window {
         id: container
         width: root.width
         height: Math.min(root.width, root.height)
+        visible: true
+        clip: false
         anchors.centerIn: parent
 
         Row { //property are used to control the arrangement and spacing of items within a horizontal layout.
@@ -138,7 +142,7 @@ Window {
 
             CircularGauge { //RPM
                 id: tachometer
-                value: valueSource.gear // Sets the current value of the gauge to the value of "gear" from valueSource.
+                value: valueSource.rpm // Sets the current value of the gauge to the value of "gear" from valueSource.
                 width: height
                 height: container.height * 0.5
                 maximumValue: 8

@@ -123,7 +123,7 @@ void loop() {
   canMsg.data[0] = r; 
   canMsg.data[1] = d;
   mcp2515.sendMessage(&canMsg);     //Sends the CAN message
-  delay(500);
+  delay(100);
 }
 
 void Pulse_Event() {
