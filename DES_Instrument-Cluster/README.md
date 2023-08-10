@@ -305,12 +305,13 @@ If the compilation is successful, copy the compiled files to the Raspberry Pi us
 
 ```bash
 cd build-cc_ex-team07-Debug/
-rsync -avz --rsync-path="rsync"  team07@192.168.86.51:/home/team07
+rsync -avz --rsync-path="rsync" filename team07@192.168.86.51:/home/team07
 ```
 
 ## Execute on the Raspberry Pi(RPi)
 
 ```bash
+ssh -X team07@192.168.86.51
 cd /home/team07
 ./cc_ex
 ```
