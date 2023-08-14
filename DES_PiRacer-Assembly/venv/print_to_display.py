@@ -3,6 +3,7 @@ import os
 import pathlib
 import time
 import signal
+import math
 from piracer.vehicles import PiRacerBase, PiRacerStandard, PiRacerPro
 
 
@@ -13,7 +14,11 @@ def print_battery_report(vehicle: PiRacerBase):
     battery_voltage = vehicle.get_battery_voltage()
     battery_current = vehicle.get_battery_current()
     power_consumption = vehicle.get_power_consumption()
-
+    print("v:", battery_voltage)
+    print("i:", battery_current)
+    print("w:", power_consumption)
+    power = (battery_voltage-9)/3.2*100
+    print(power,'%')
     display = vehicle.get_display()
 
     output_text = 'U={0:0>6.3f}V\nI={1:0>8.3f}mA\nP={2:0>6.3f}W'.format(battery_voltage, battery_current,
