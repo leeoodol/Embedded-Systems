@@ -315,5 +315,9 @@ ssh -X team07@192.168.86.51
 cd /home/team07
 ./cc_ex
 ```
-
-
+## Install extra dependencies for Qt(RPI)
+```bash
+sudo apt-get update
+sudo apt-get install qtcreator
+sudo apt-get install qml-module-qtquick-extras
+```
