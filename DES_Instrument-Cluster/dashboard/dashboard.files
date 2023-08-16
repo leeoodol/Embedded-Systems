@@ -1,0 +1,15 @@
+dashboard.cflags
+dashboard.cxxflags
+dashboard.pro
+dashboard.qrc
+fonts/DejaVuSans.ttf
+fonts/LICENSE
+images/fuel-icon.png
+images/temperature-icon.png
+main.cpp
+qml/DashboardGaugeStyle.qml
+qml/IconGaugeStyle.qml
+qml/TachometerStyle.qml
+qml/TurnIndicator.qml
+qml/ValueSource.qml
+qml/dashboard.qml

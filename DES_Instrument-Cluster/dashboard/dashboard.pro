@@ -1,27 +1,30 @@
-TEMPLATE = app
-TARGET = dashboard
-INCLUDEPATH += .
-QT += quick dbus
+# Created by and for Qt Creator This file was created for editing the project sources only.
+# You may attempt to use it for building too, by modifying this file here.
 
-SOURCES += \
-    dbusmanager.cpp \
-    main.cpp
+#TARGET = dashboard
 
-RESOURCES += \
-    dashboard.qrc
+QT = core gui widgets
 
-OTHER_FILES += \
-    qml/dashboard.qml \
-    qml/DashboardGaugeStyle.qml \
-    qml/IconGaugeStyle.qml \
-    qml/TachometerStyle.qml \
-    qml/TurnIndicator.qml \
-    qml/ValueSource.qml
+HEADERS =
 
-target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/dashboard
-INSTALLS += target
+SOURCES = \
+   $$PWD/fonts/DejaVuSans.ttf \
+   $$PWD/fonts/LICENSE \
+   $$PWD/images/fuel-icon.png \
+   $$PWD/images/temperature-icon.png \
+   $$PWD/qml/dashboard.qml \
+   $$PWD/qml/DashboardGaugeStyle.qml \
+   $$PWD/qml/IconGaugeStyle.qml \
+   $$PWD/qml/TachometerStyle.qml \
+   $$PWD/qml/TurnIndicator.qml \
+   $$PWD/qml/ValueSource.qml \
+   $$PWD/dashboard.cflags \
+   $$PWD/dashboard.cxxflags \
+   $$PWD/dashboard.pro \
+   $$PWD/dashboard.qrc \
+   $$PWD/main.cpp
 
-DISTFILES +=
+INCLUDEPATH =
 
-HEADERS += \
-    dbusmanager.h
+#DEFINES = 
+

@@ -9,6 +9,5 @@
         <file>qml/TachometerStyle.qml</file>
         <file>qml/TurnIndicator.qml</file>
         <file>qml/ValueSource.qml</file>
-        <file>images/distance-icon.png</file>
     </qresource>
 </RCC>

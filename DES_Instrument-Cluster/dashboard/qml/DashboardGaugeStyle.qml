@@ -54,7 +54,7 @@ import QtQuick.Controls.Styles 1.4
 CircularGaugeStyle {
     tickmarkInset: toPixels(0.04)
     minorTickmarkInset: tickmarkInset
-    labelStepSize: 5
+    labelStepSize: 20
     labelInset: toPixels(0.23)
 
     property real xCenter: outerRadius
@@ -84,13 +84,13 @@ CircularGaugeStyle {
         }
 
         ctx.beginPath();
-        ctx.fillStyle = "#black";
+        ctx.fillStyle = "black";
         ctx.ellipse(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.fill();
 
         ctx.beginPath();
         ctx.lineWidth = tickmarkInset;
-        ctx.strokeStyle = "white";
+        ctx.strokeStyle = "black";
         ctx.arc(xCenter, yCenter, outerRadius - ctx.lineWidth / 2, outerRadius - ctx.lineWidth / 2, 0, Math.PI * 2);
         ctx.stroke();
 
@@ -130,7 +130,7 @@ CircularGaugeStyle {
             readonly property int kphInt: control.value
         }
         Text {
-            text: "cm/s"
+            text: "km/h"
             color: "white"
             font.pixelSize: toPixels(0.09)
             anchors.top: speedText.bottom

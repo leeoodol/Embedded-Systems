@@ -2,7 +2,7 @@ from pydbus import SessionBus
 import time
 
 bus = SessionBus()
-the_object = bus.get("net.team07.pydbus.ClientServerExample")
+the_object = bus.get("com.example.dbusService")
 
 try:
     while True:
@@ -16,7 +16,7 @@ try:
         print("Battery:", reply_battery)
         
         # Delay for a short period before the next iteration
-        time.sleep(1)  # Adjust the delay as needed
+        #time.sleep(1)  # Adjust the delay as needed
 except KeyboardInterrupt:
     print("Keyboard interrupt detected. Exiting...")
 

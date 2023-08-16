@@ -52,27 +52,16 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtGui/QFont>
 #include <QtGui/QFontDatabase>
-#include <QQmlContext>
-#include "dbusmanager.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    qmlRegisterType<DBusManager>("com.example", 1, 0, "DBusManager");
-
     QFontDatabase::addApplicationFont(":/fonts/DejaVuSans.ttf");
     app.setFont(QFont("DejaVu Sans"));
 
     QQmlApplicationEngine engine(QUrl("qrc:/qml/dashboard.qml"));
-
-    DBusManager dbusManager; // Create an instance of the RPMManager class
-    //engine.rootContext()->setContextProperty("dbusManager", &dbusManager);
-
     if (engine.rootObjects().isEmpty())
         return -1;
-
-
-
     return app.exec();
 }
