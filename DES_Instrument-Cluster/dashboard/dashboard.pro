@@ -1,9 +1,10 @@
 TEMPLATE = app
 TARGET = dashboard
 INCLUDEPATH += .
-QT += quick
+QT += quick dbus
 
 SOURCES += \
+    dbusmanager.cpp \
     main.cpp
 
 RESOURCES += \
@@ -19,3 +20,8 @@ OTHER_FILES += \
 
 target.path = $$[QT_INSTALL_EXAMPLES]/quickcontrols/extras/dashboard
 INSTALLS += target
+
+DISTFILES +=
+
+HEADERS += \
+    dbusmanager.h

@@ -108,7 +108,7 @@ DashboardGaugeStyle {
             readonly property int rpmInt: valueSource.rpm
         }
         Text {
-            text: "x1000"
+            text: "x10"
             color: "white"
             font.pixelSize: tachometerStyle.toPixels(0.1)
             anchors.top: parent.top

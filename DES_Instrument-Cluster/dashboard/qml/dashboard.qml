@@ -48,7 +48,7 @@
 **
 ****************************************************************************/
 
-import QtQuick 2.15
+import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
@@ -63,10 +63,8 @@ Window {
     color: "#161616"
     title: "Qt Quick Extras Demo"
 
-    ValueSource { //애니메이션을 위해 시간에 따라 변하는 값 used to get dynamic data for the UI.
+    ValueSource {
         id: valueSource
-        visible: true
-        clip: false
     }
 
     // Dashboards are typically in a landscape orientation, so we need to ensure
@@ -75,43 +73,26 @@ Window {
         id: container
         width: root.width
         height: Math.min(root.width, root.height)
-        visible: true
-        clip: false
         anchors.centerIn: parent
 
-        Row { //property are used to control the arrangement and spacing of items within a horizontal layout.
-            /*
-              The Row layout is a Qt QML layout element that arranges its child items horizontally in a row.
-              It's commonly used to align items side by side within a container, such as a Window or another layout.
-              Items added as children of a Row will be positioned from left to right in the order they are declared.
-            */
-
+        Row {
             id: gaugeRow
-            spacing: container.width * 0.02 //controls the amount of space between adjacent child items
+            spacing: container.width * 0.02
             anchors.centerIn: parent
 
-//            TurnIndicator { //왼쪽 깜박이
-//                id: leftIndicator
-//                anchors.verticalCenter: parent.verticalCenter
-//                width: height
-//                height: container.height * 0.1 - gaugeRow.spacing
-
-//                direction: Qt.LeftArrow
-//                on: valueSource.turnSignal == Qt.LeftArrow
-//            }
-
-            Item { //fuel gauge
+            Item {
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
                 anchors.verticalCenter: parent.verticalCenter
 
                 CircularGauge {
                     id: fuelGauge
-                    y: 71
                     value: valueSource.fuel
                     maximumValue: 1
+                    y: 71
                     width: parent.width
                     height: parent.height * 0.7
+                    rotation: -2.816
 
                     style: IconGaugeStyle {
                         id: fuelGaugeStyle
@@ -129,43 +110,69 @@ Window {
                 }
             }
 
-            CircularGauge { //속도계
+            CircularGauge {
                 id: speedometer
-                value: valueSource.kph // Sets the current value of the gauge to the value of "kph" from valueSource.
+                value: valueSource.kph
                 anchors.verticalCenter: parent.verticalCenter
-                maximumValue: 280
+                maximumValue: 50
+                // We set the width to the height, because the height will always be
+                // the more limited factor. Also, all circular controls letterbox
+                // their contents to ensure that they remain circular. However, we
+                // don't want to extra space on the left and right of our gauges,
+                // because they're laid out horizontally, and that would create
+                // large horizontal gaps between gauges on wide screens.
                 width: height
                 height: container.height * 0.5
 
                 style: DashboardGaugeStyle {}
             }
+            /*
+            Text {
+                color: "white"
+                text: "GEAR : " + valueSource.gear
 
-            CircularGauge { //RPM
+                // Add some styling properties to make it fancy
+                font.bold: true
+
+                font.italic: true
+                opacity: 0.8
+
+                scale: 2
+                smooth: true
+                wrapMode: Text.WordWrap
+                elide: Text.ElideRight
+                maximumLineCount: 1
+                clip: true
+            }
+            */
+            CircularGauge {
                 id: tachometer
-                value: valueSource.rpm // Sets the current value of the gauge to the value of "gear" from valueSource.
                 width: height
                 height: container.height * 0.5
+                value: valueSource.rpm
                 maximumValue: 8
                 anchors.verticalCenter: parent.verticalCenter
 
                 style: TachometerStyle {}
             }
 
-            Item { //연료 및 온도 게이지
+            Item {
                 width: height
                 height: container.height * 0.25 - gaugeRow.spacing
                 anchors.verticalCenter: parent.verticalCenter
+
                 CircularGauge {
-                    y: 71
+                    id: circularGauge
                     value: valueSource.temperature
                     maximumValue: 1
                     width: parent.width
                     height: parent.height * 0.7
+                    y: 71
 
                     style: IconGaugeStyle {
                         id: tempGaugeStyle
 
-                        icon: "qrc:/images/temperature-icon.png"
+                        icon: "qrc:/images/distance-icon.png"
                         maxWarningColor: Qt.rgba(0.5, 0, 0, 1)
 
                         tickmarkLabel: Text {
@@ -177,17 +184,6 @@ Window {
                     }
                 }
             }
-
-//            TurnIndicator { //오른쪽 깜박이
-//                id: rightIndicator
-//                anchors.verticalCenter: parent.verticalCenter
-//                width: height
-//                height: container.height * 0.1 - gaugeRow.spacing
-
-//                direction: Qt.RightArrow
-//                on: valueSource.turnSignal == Qt.RightArrow
-//            }
-
         }
     }
 }
