@@ -1,6 +1,6 @@
 #include <SPI.h>          //Library for using SPI Communication 
 #include <mcp2515.h>      //Library for using CAN Communication (https://github.com/autowp/arduino-mcp2515/)
- 
+
 struct can_frame canMsg; //canMsg struct data type for storing CAN message format.
  
 MCP2515 mcp2515(10); //set the pin number where SPI CS is connected.
@@ -118,8 +118,8 @@ void loop() {
 
   //ultra sonic
   int d = ultrasonic();
-   
   int r = RPM;
+
   canMsg.data[0] = r; 
   canMsg.data[1] = d;
   mcp2515.sendMessage(&canMsg);     //Sends the CAN message
