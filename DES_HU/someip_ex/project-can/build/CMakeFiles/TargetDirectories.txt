@@ -1,0 +1,4 @@
+/home/seame-workstation05/project-can/build/CMakeFiles/rebuild_cache.dir
+/home/seame-workstation05/project-can/build/CMakeFiles/edit_cache.dir
+/home/seame-workstation05/project-can/build/CMakeFiles/CANService.dir
+/home/seame-workstation05/project-can/build/CMakeFiles/CANClient.dir
