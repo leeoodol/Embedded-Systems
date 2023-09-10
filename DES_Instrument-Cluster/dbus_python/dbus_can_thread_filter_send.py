@@ -18,7 +18,7 @@ def weighted_moving_average(data, weights):
     moving_average = sum(val * weight for val, weight in zip(data, weights))
     return moving_average
 
-CAN_ID = "can1"
+CAN_ID = "can0"
         
 class dbusService(object):
     """

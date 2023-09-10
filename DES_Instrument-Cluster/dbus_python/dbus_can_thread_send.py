@@ -6,7 +6,7 @@ from pydbus import SessionBus
 from gi.repository import GLib
 from threading import Thread
 
-CAN_ID = "can1"
+CAN_ID = "can0"
         
 class dbusService(object):
     """
